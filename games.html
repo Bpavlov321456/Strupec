@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Игри - Село Струпец</title>
     <meta name="description" content="Колекция от забавни игри за свободното време.">
-    <meta name="keywords" content="игри, забавление, познай числото, викторина, морски шах, игра на памет, камък ножица хартия">
+    <meta name="keywords" content="игри, забавление, познай числото, викторина, морски шах">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Основни променливи и глобални стилове */
+        /* Всички CSS стилове от предишния 'index.html' файл (с игрите) се поставят тук */
+        /* Уверете се, че всички :root променливи, анимации и адаптивни стилове са включени */
         :root {
             --primary-color: #667eea;
             --secondary-color: #764ba2;
@@ -38,7 +39,6 @@
             overflow-x: hidden;
         }
 
-        /* Плаващи частици фон */
         .floating-particles {
             position: fixed;
             top: 0;
@@ -61,7 +61,7 @@
             50% { transform: translateY(-20px) rotate(180deg); }
         }
 
-        /* Уиджети за време и дата */
+        /* Weather and Datetime widgets remain fixed */
         .weather-widget {
             position: fixed;
             top: 20px;
@@ -106,7 +106,7 @@
             padding: 20px;
         }
 
-        /* Горна навигация */
+        /* Top Navigation */
         .top-nav {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
@@ -119,7 +119,7 @@
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            margin-top: 80px; /* Отместване заради фиксираните уиджети */
+            margin-top: 80px; /* Adjust for fixed widgets */
         }
 
         .top-nav a {
@@ -138,7 +138,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Заглавие на страницата с игри */
+        /* Main content styling for games page */
         .games-header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -161,17 +161,16 @@
             background-clip: text;
         }
 
-        /* Общи стилове за секциите с игри */
         .game-section {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             border-radius: 25px;
             padding: 40px;
-            margin: 40px auto;
+            margin: 40px auto; /* Centering games and stacking them */
             box-shadow: var(--shadow-heavy);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
-            max-width: 800px;
+            max-width: 800px; /* Max width for game sections */
         }
 
         .game-section h2 {
@@ -181,36 +180,16 @@
             font-size: clamp(1.8em, 3vw, 2.2em);
             border-bottom: 3px solid var(--primary-color);
             padding-bottom: 15px;
-            display: inline-block;
+            display: inline-block; /* To make border-bottom fit text */
         }
 
-        /* Стилове за всички бутони в игрите */
-        .game-section button {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px; /* Общ марджин за бутоните в игрите */
-        }
-
-        .game-section button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            opacity: 0.9;
-        }
-
-        /* Стилове за играта "Познай числото" */
+        /* Styles for Guess the Number Game */
         .guess-game {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            max-width: 500px;
+            max-width: 500px; /* Specific max-width for game content inside section */
             margin: 30px auto;
             padding: 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(240, 147, 251, 0.3));
@@ -234,6 +213,24 @@
             text-align: center;
         }
 
+        .guess-game button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .guess-game button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
         #guessFeedback {
             margin-top: 15px;
             font-size: 1.3em;
@@ -246,13 +243,13 @@
             color: var(--text-light);
         }
 
-        /* Стилове за играта "Викторина за Село Струпец" */
+        /* Styles for Quiz Game */
         .quiz-game {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            max-width: 700px;
+            max-width: 700px; /* Specific max-width for game content inside section */
             margin: 30px auto;
             padding: 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(102, 126, 234, 0.3));
@@ -263,7 +260,7 @@
         #quizContainer {
             width: 100%;
             text-align: left;
-            display: none;
+            display: none; /* Скриваме го, докато играта не започне */
         }
 
         #question {
@@ -301,13 +298,13 @@
         }
 
         .option-button.correct {
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* Green */
             color: white;
             border-color: #4CAF50;
         }
 
         .option-button.incorrect {
-            background-color: #f44336;
+            background-color: #f44336; /* Red */
             color: white;
             border-color: #f44336;
         }
@@ -319,36 +316,64 @@
 
         #nextButton {
             background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
             margin-top: 10px;
         }
+
+        #nextButton:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
+        #quizFeedback {
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        #scoreDisplay {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: var(--text-dark);
+        }
         
+        /* Larger Quiz Start Button */
         #startQuizButton {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) !important;
             color: white !important;
-            padding: 15px 30px !important;
+            padding: 15px 30px !important; /* Larger padding */
             border: none !important;
-            border-radius: 12px !important;
-            font-size: 1.3em !important;
-            font-weight: 700 !important;
+            border-radius: 12px !important; /* Slightly more rounded */
+            font-size: 1.3em !important; /* Larger font size */
+            font-weight: 700 !important; /* Bolder text */
             cursor: pointer !important;
             transition: all 0.3s ease !important;
-            margin-top: 25px !important;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+            margin-top: 25px !important; /* More margin */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important; /* More prominent shadow */
         }
 
         #startQuizButton:hover {
-            transform: translateY(-4px) scale(1.02) !important;
+            transform: translateY(-4px) scale(1.02) !important; /* More pronounced hover effect */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
             opacity: 0.95 !important;
         }
 
-        /* Стилове за играта "Морски шах" */
+
+        /* Styles for Tic-Tac-Toe Game */
         .tic-tac-toe-game {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            max-width: 400px;
+            max-width: 400px; /* Specific max-width for game content inside section */
             margin: 30px auto;
             padding: 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(118, 75, 162, 0.3));
@@ -400,158 +425,24 @@
             color: var(--text-dark);
         }
 
-        /* Стилове за играта "Игра на памет" */
-        .memory-game {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            max-width: 600px; /* Adjust as needed */
-            margin: 30px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(240, 147, 251, 0.3));
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-        }
-
-        .memory-game-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4x4 мрежа за 16 карти */
-            gap: 10px;
-            width: 100%; /* Уверете се, че използва 100% от наличната ширина на родителя */
-            max-width: 420px; /* Първоначална максимална ширина */
-            aspect-ratio: 1 / 1; /* Запазва съотношението 1:1, независимо от ширината */
-            perspective: 1000px; /* За 3D ефект на обръщане */
-        }
-
-        .memory-card {
-            width: 100%; /* Заема 100% от ширината на колоната в грида */
-            height: 0; /* Нулираме височината, за да използваме padding-bottom за съотношение */
-            padding-bottom: 100%; /* Прави картата квадратна */
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-            cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .memory-card.flip {
-            transform: rotateY(180deg);
-        }
-
-        .memory-card.matched {
-            opacity: 0.5;
-            cursor: default;
-        }
-
-        .front-face, .back-face {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            backface-visibility: hidden;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5em; /* Default font size */
-            font-weight: bold;
-        }
-
-        .front-face {
-            background-color: var(--primary-color);
+        .tic-tac-toe-game button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
-            transform: rotateY(180deg);
-        }
-
-        .back-face {
-            background-color: var(--secondary-color);
-            color: white;
-            border: 2px solid var(--accent-color);
-        }
-
-        #memoryStatus {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: var(--text-dark);
-        }
-
-        /* Стилове за играта "Камък, ножица, хартия" */
-        .rps-game {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            max-width: 500px;
-            margin: 30px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(102, 126, 234, 0.3));
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-        }
-
-        .rps-choices button {
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            color: white;
-            padding: 15px 25px;
+            padding: 12px 25px;
             border: none;
             border-radius: 10px;
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0 10px;
         }
 
-        .rps-choices button:hover {
+        .tic-tac-toe-game button:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             opacity: 0.9;
         }
 
-        .rps-display {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-top: 20px;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .rps-display div {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            margin: 0 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        #playerChoice, #computerChoice {
-            color: var(--text-dark);
-        }
-
-        #rpsResult {
-            margin-top: 20px;
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--text-dark);
-        }
-
-        #rpsScore {
-            margin-top: 10px;
-            font-size: 1.1em;
-            color: var(--text-light);
-        }
-
-        .rps-game button.reset-button {
-            background: var(--secondary-color);
-            margin-top: 20px;
-        }
-
-        /* Футър */
         footer {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
@@ -574,7 +465,6 @@
             margin: 5px 0;
         }
 
-        /* Бутон за връщане най-отгоре */
         .scroll-to-top {
             position: fixed;
             bottom: 30px;
@@ -603,7 +493,7 @@
             transform: translateY(-5px) scale(1.1);
         }
 
-        /* Анимации */
+        /* Animations */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -615,7 +505,7 @@
             transform: translateY(0);
         }
 
-        /* Анимация за зареждане */
+        /* Loading Animation */
         .loading {
             display: inline-block;
             width: 20px;
@@ -630,7 +520,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Адаптивен дизайн */
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -646,7 +536,7 @@
                 padding: 8px 12px;
             }
             
-            /* Уиджетите се преместват статично за мобилни устройства */
+            /* Widgets can stack for better mobile viewing */
             .weather-widget, .datetime-widget {
                 position: static;
                 margin: 10px auto;
@@ -662,9 +552,9 @@
                 padding: 25px;
                 margin: 20px auto;
             }
-            .guess-game, .quiz-game, .tic-tac-toe-game, .memory-game, .rps-game {
+            .guess-game, .quiz-game, .tic-tac-toe-game {
                 padding: 20px;
-                max-width: 100%; /* Заемат цялата ширина на екрана */
+                max-width: 100%;
             }
             .options-grid {
                 grid-template-columns: 1fr;
@@ -687,29 +577,6 @@
                 padding: 12px 25px !important;
                 font-size: 1.1em !important;
             }
-
-            /* Адаптивни стилове за Игра на памет */
-            .memory-game-board {
-                max-width: 340px; /* Adjusted max-width for 768px screens */
-                margin: 0 auto; /* Ensure it's centered */
-            }
-            .memory-card .front-face, .memory-card .back-face {
-                font-size: 2em; /* Smaller font for smaller cards */
-            }
-
-            /* Адаптивни стилове за Камък, ножица, хартия */
-            .rps-choices button {
-                padding: 12px 18px;
-                font-size: 1.1em;
-                margin: 0 5px;
-            }
-            .rps-display {
-                flex-direction: column; /* Изборът и резултатът се подреждат вертикално */
-                gap: 10px;
-            }
-            .rps-display div {
-                margin: 0;
-            }
         }
 
         @media (max-width: 480px) {
@@ -719,14 +586,8 @@
             .game-section {
                 padding: 20px;
             }
-            .guess-game, .quiz-game, .tic-tac-toe-game, .memory-game, .rps-game {
+            .guess-game, .quiz-game, .tic-tac-toe-game {
                 gap: 15px;
-            }
-            .memory-game-board {
-                max-width: 290px; /* Further adjusted max-width for 480px screens */
-            }
-            .memory-card .front-face, .memory-card .back-face {
-                font-size: 1.8em; /* Even smaller font */
             }
         }
     </style>
@@ -750,6 +611,8 @@
 
     <nav class="top-nav">
         <a href="index.html">Начало</a>
+        <a href="gallery.html">Галерия</a>
+        <a href="trip.html">Как да стигнем</a>
         <a href="games.html">Игри</a>
         <a href="blog.html">Блог</a>
     </nav>
@@ -808,37 +671,6 @@
             <button onclick="resetTicTacToe()">Нова игра</button>
         </div>
     </section>
-
-    <section class="game-section fade-in" id="memory-game">
-        <h2>🧠 Игра на памет</h2>
-        <p>Открийте всички съвпадащи двойки!</p>
-        <div class="memory-game">
-            <div id="memoryGameBoard" class="memory-game-board">
-                </div>
-            <p id="memoryStatus">Време: 0s | Опити: 0</p>
-            <button onclick="startMemoryGame()">Нова игра</button>
-        </div>
-    </section>
-
-    <section class="game-section fade-in" id="rock-paper-scissors">
-        <h2>✊✋✌️ Камък, ножица, хартия</h2>
-        <p>Предизвикайте компютъра!</p>
-        <div class="rps-game">
-            <div class="rps-choices">
-                <button onclick="playRPS('rock')">Камък ✊</button>
-                <button onclick="playRPS('paper')">Хартия ✋</button>
-                <button onclick="playRPS('scissors')">Ножица ✌️</button>
-            </div>
-            <div class="rps-display">
-                <div>Вие: <span id="playerChoice">?</span></div>
-                <div>Компютър: <span id="computerChoice">?</span></div>
-            </div>
-            <p id="rpsResult">Изберете!</p>
-            <p id="rpsScore">Победи: 0 | Загуби: 0 | Равенства: 0</p>
-            <button class="reset-button" onclick="resetRPS()">Нова игра</button>
-        </div>
-    </section>
-
 
     <footer class="fade-in">
         <div class="footer-info">
@@ -1004,8 +836,8 @@
             feedback.style.color = 'orange';
         }
 
-        guessInput.value = '';
-        guessInput.focus();
+        guessInput.value = ''; // Изчистваме полето за следващо предположение
+        guessInput.focus(); // Фокусираме обратно към полето
     }
 
     // --- JavaScript за играта "Викторина за Село Струпец" ---
@@ -1132,9 +964,9 @@
     let gameActive = true;
 
     const winningConditions = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Редове
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Колони
+        [0, 4, 8], [2, 4, 6]             // Диагонали
     ];
 
     function handleCellClick(clickedCellEvent) {
@@ -1207,185 +1039,6 @@
         });
     }
 
-    // --- JavaScript за играта "Игра на памет" ---
-    const memoryCards = ['🍎', '🍌', '🍒', '🍇', '🍋', '🍊', '🍓', '🍉'];
-    let gameBoard = [];
-    let flippedCards = [];
-    let matchedPairs = 0;
-    let lockBoard = false;
-    let timerInterval;
-    let seconds = 0;
-    let attemptsMemory = 0;
-
-    const memoryGameBoardElement = document.getElementById('memoryGameBoard');
-    const memoryStatusElement = document.getElementById('memoryStatus');
-
-    function startMemoryGame() {
-        gameBoard = [...memoryCards, ...memoryCards];
-        shuffle(gameBoard);
-        memoryGameBoardElement.innerHTML = '';
-        flippedCards = [];
-        matchedPairs = 0;
-        lockBoard = false;
-        seconds = 0;
-        attemptsMemory = 0;
-        updateMemoryStatus();
-        clearInterval(timerInterval);
-        timerInterval = setInterval(updateMemoryTimer, 1000);
-
-        gameBoard.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.classList.add('memory-card');
-            card.dataset.item = item;
-            card.dataset.index = index;
-
-            const frontFace = document.createElement('div');
-            frontFace.classList.add('front-face');
-            frontFace.textContent = item;
-
-            const backFace = document.createElement('div');
-            backFace.classList.add('back-face');
-            backFace.textContent = '?';
-
-            card.appendChild(frontFace);
-            card.appendChild(backFace);
-            card.addEventListener('click', flipCard);
-            memoryGameBoardElement.appendChild(card);
-        });
-    }
-
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    function flipCard() {
-        if (lockBoard) return;
-        if (this === flippedCards[0]) return;
-
-        this.classList.add('flip');
-        flippedCards.push(this);
-
-        if (flippedCards.length === 2) {
-            attemptsMemory++;
-            updateMemoryStatus();
-            checkForMatch();
-        }
-    }
-
-    function checkForMatch() {
-        const [cardOne, cardTwo] = flippedCards;
-        const isMatch = cardOne.dataset.item === cardTwo.dataset.item;
-
-        isMatch ? disableCards() : unflipCards();
-    }
-
-    function disableCards() {
-        const [cardOne, cardTwo] = flippedCards;
-        cardOne.removeEventListener('click', flipCard);
-        cardTwo.removeEventListener('click', flipCard);
-        
-        cardOne.classList.add('matched');
-        cardTwo.classList.add('matched');
-
-        matchedPairs++;
-        resetBoard();
-
-        if (matchedPairs === memoryCards.length) {
-            clearInterval(timerInterval);
-            memoryStatusElement.textContent = `Поздравления! Завършихте за ${seconds} секунди с ${attemptsMemory} опита!`;
-            memoryStatusElement.style.color = 'green';
-        }
-    }
-
-    function unflipCards() {
-        lockBoard = true;
-        setTimeout(() => {
-            flippedCards[0].classList.remove('flip');
-            flippedCards[1].classList.remove('flip');
-            resetBoard();
-        }, 1000);
-    }
-
-    function resetBoard() {
-        [flippedCards, lockBoard] = [[], false];
-    }
-
-    function updateMemoryTimer() {
-        seconds++;
-        updateMemoryStatus();
-    }
-
-    function updateMemoryStatus() {
-        memoryStatusElement.textContent = `Време: ${seconds}s | Опити: ${attemptsMemory}`;
-    }
-
-
-    // --- JavaScript за играта "Камък, ножица, хартия" ---
-    const rpsChoices = ['rock', 'paper', 'scissors'];
-    let playerScore = 0;
-    let computerScore = 0;
-    let rpsDraws = 0; // Добавен брояч за равенства
-
-    const playerChoiceDisplay = document.getElementById('playerChoice');
-    const computerChoiceDisplay = document.getElementById('computerChoice');
-    const rpsResultDisplay = document.getElementById('rpsResult');
-    const rpsScoreDisplay = document.getElementById('rpsScore');
-
-    function playRPS(playerSelection) {
-        const computerSelection = rpsChoices[Math.floor(Math.random() * rpsChoices.length)];
-
-        playerChoiceDisplay.textContent = getBulgarianChoice(playerSelection);
-        computerChoiceDisplay.textContent = getBulgarianChoice(computerSelection);
-
-        const result = determineWinner(playerSelection, computerSelection);
-        rpsResultDisplay.textContent = result;
-        updateRPSScore(result);
-    }
-
-    function getBulgarianChoice(choice) {
-        switch (choice) {
-            case 'rock': return 'Камък ✊';
-            case 'paper': return 'Хартия ✋';
-            case 'scissors': return 'Ножица ✌️';
-            default: return '?';
-        }
-    }
-
-    function determineWinner(player, computer) {
-        if (player === computer) {
-            rpsDraws++; // Увеличава равенствата
-            return 'Равенство! 🤝';
-        } else if (
-            (player === 'rock' && computer === 'scissors') ||
-            (player === 'paper' && computer === 'rock') ||
-            (player === 'scissors' && computer === 'paper')
-        ) {
-            playerScore++; // Увеличава победите на играча
-            return 'Вие печелите! 🎉';
-        } else {
-            computerScore++; // Увеличава победите на компютъра
-            return 'Компютърът печели! 🤖';
-        }
-    }
-
-    function updateRPSScore(result) {
-        rpsScoreDisplay.textContent = `Победи: ${playerScore} | Загуби: ${computerScore} | Равенства: ${rpsDraws}`;
-    }
-
-    function resetRPS() {
-        playerScore = 0;
-        computerScore = 0;
-        rpsDraws = 0; // Нулира и равенствата
-        playerChoiceDisplay.textContent = '?';
-        computerChoiceDisplay.textContent = '?';
-        rpsResultDisplay.textContent = 'Изберете!';
-        rpsScoreDisplay.textContent = `Победи: 0 | Загуби: 0 | Равенства: 0`;
-    }
-
-
     // --- DOMContentLoaded Event Listener ---
     document.addEventListener('DOMContentLoaded', function() {
         updateDateTime();
@@ -1398,9 +1051,9 @@
         
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', adjustForMobile);
-        adjustForMobile(); // Call on load to set initial state
+        adjustForMobile(); // Initial call to adjust on load
 
-        // Инициализация на fade-in ефекта
+        // Initial fade-in for page sections
         setTimeout(() => {
             const elements = document.querySelectorAll('.fade-in');
             elements.forEach((element, index) => {
@@ -1410,8 +1063,8 @@
             });
         }, 100);
 
-        // Инициализация на игрите
-        if (document.getElementById('guessInput')) {
+        // Initialize Guess the Number game (only for games.html)
+        if (document.getElementById('guessInput')) { // Check if elements exist
              startGame(); 
              document.getElementById('guessInput').addEventListener('keypress', function(event) {
                  if (event.key === 'Enter') {
@@ -1420,21 +1073,14 @@
              });
         }
        
-        if (document.getElementById('gameBoard')) {
+        // Initialize Tic-Tac-Toe game (only for games.html)
+        if (document.getElementById('gameBoard')) { // Check if elements exist
             cells.forEach(cell => cell.addEventListener('click', handleCellClick));
             resetTicTacToe();
         }
-
-        if (document.getElementById('memoryGameBoard')) {
-            startMemoryGame();
-        }
-
-        if (document.getElementById('rock-paper-scissors')) {
-            resetRPS();
-        }
     });
 
-    // Адаптивни корекции за уиджети
+    // Mobile adjustments for weather/datetime widgets
     function adjustForMobile() {
         const weatherWidget = document.querySelector('.weather-widget');
         const datetimeWidget = document.querySelector('.datetime-widget');
