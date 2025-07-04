@@ -20,6 +20,11 @@
             --bg-glass: rgba(255, 255, 255, 0.1);
             --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
             --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --gradient-main: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            /* Добавени от Trip страницата за съгласуваност */
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffed4e);
+            --gradient-nature: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+            --gradient-cuisine: linear-gradient(135deg, #fceabb, #f8b500);
         }
 
         /* --- Базови стилове и ресет --- */
@@ -33,22 +38,24 @@
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: var(--gradient-main); /* Променено да използва променлива за градиента */
             background-attachment: fixed;
             min-height: 100vh;
             overflow-x: hidden; /* Предотвратява хоризонтално скролване */
             display: flex;
             flex-direction: column;
+            align-items: center; /* Центрира съдържанието, както е в trip.html */
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            width: 100%; /* Гарантира, че контейнерът заема пълна ширина в body */
             flex-grow: 1; /* Позволява на контейнера да заеме наличното пространство */
         }
 
-        /* --- Анимация на частици (Particles) --- */
+        /* --- Анимация на частици (Floating Particles) --- */
         .floating-particles {
             position: fixed;
             top: 0;
@@ -57,22 +64,28 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
+            overflow: hidden; /* Ensure particles don't escape */
         }
 
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15); /* Slightly more visible */
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+            animation: float 10s ease-in-out infinite alternate; /* Slower and alternate */
+            opacity: 0.8;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+            25% { transform: translate(50px, -30px) rotate(90deg); opacity: 0.9; }
+            50% { transform: translate(100px, 0) rotate(180deg); opacity: 0.8; }
+            75% { transform: translate(50px, 30px) rotate(270deg); opacity: 0.9; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.8; }
         }
 
         /* --- Уиджети (Weather & Datetime) --- */
         .weather-widget, .datetime-widget {
+            position: fixed; /* Отново fixed */
             background: var(--bg-glass);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -82,28 +95,32 @@
             font-size: 0.9em;
             z-index: 1000;
             box-shadow: var(--shadow-light);
+            transition: all 0.3s ease; /* Smooth transition for hover */
         }
 
         .weather-widget {
-            position: fixed;
             top: 20px;
             right: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
-            min-width: 160px; /* Фиксирана минимална ширина */
+            /* Премахнато min-width: 160px за по-гъвкавост */
         }
+        .weather-widget:hover, .datetime-widget:hover { /* Добавено от trip.html */
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
         .weather-widget img {
             width: 30px;
             height: 30px;
-            flex-shrink: 0; /* Предотвратява смаляване */
+            flex-shrink: 0;
         }
 
         .datetime-widget {
-            position: fixed;
             top: 20px;
             left: 20px;
-            min-width: 200px; /* Фиксирана минимална ширина */
+            min-width: 200px; /* Запазено от trip.html */
         }
 
         /* --- Горна навигация (Top Navigation) --- */
@@ -114,16 +131,13 @@
             border-radius: 0 0 25px 25px;
             padding: 15px 30px;
             margin-bottom: 30px;
-            box-shadow: var(--shadow-light);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Adjusted shadow for elegance - от trip.html */
             display: flex;
             justify-content: center;
             gap: 20px;
-            flex-wrap: wrap; /* Позволява на елементите да преминават на нов ред */
-            margin-top: 80px; /* Отстояние за фиксираните уиджети */
-            width: calc(100% - 40px); /* Ширина, отчитайки 20px padding отляво и отдясно */
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+            flex-wrap: wrap;
+            margin-top: 80px;
+            /* Премахнато width/max-width/margin-left/right за да бъде съгласувано с trip.html */
         }
 
         .top-nav a {
@@ -133,41 +147,66 @@
             padding: 10px 15px;
             border-radius: 10px;
             transition: all 0.3s ease;
-            white-space: nowrap; /* Предотвратява счупване на текста */
+            white-space: nowrap;
         }
 
         .top-nav a:hover {
             background: var(--primary-color);
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* More prominent hover shadow - от trip.html */
         }
 
         /* --- Хедър на блога (Blog Header) --- */
-        .blog-header {
+        header { /* Променено от .blog-header на header за унифициране */
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 25px;
-            padding: 40px;
-            margin: 40px 0;
+            padding: 50px 40px; /* Увеличено padding, както в trip.html */
+            margin: 100px 0 40px 0; /* Увеличено margin-top, както в trip.html */
             text-align: center;
-            box-shadow: var(--shadow-heavy);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Slightly darker shadow - от trip.html */
             border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out; /* Added fade in to header - от trip.html */
         }
 
-        .blog-header h1 {
+        header::before { /* Добавено от trip.html */
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite ease-in-out;
+        }
+
+        @keyframes shimmer { /* Добавено от trip.html */
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        h1 { /* Стиловете за h1 са взети от trip.html за съгласуваност */
             font-family: 'Playfair Display', serif;
             color: var(--text-dark);
-            font-size: clamp(2em, 5vw, 3.5em); /* Адаптивен размер на шрифта */
-            margin-bottom: 15px;
+            font-size: clamp(2.5em, 5vw, 4em);
+            margin-bottom: 20px; /* Увеличено от 15px */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15); /* Slightly stronger text shadow */
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+            z-index: 1;
         }
 
-        .blog-header p {
-            font-size: clamp(1em, 2vw, 1.2em); /* Адаптивен размер на шрифта */
+        .subtitle { /* Добавено от trip.html за съгласуваност */
+            font-size: clamp(1.1em, 2.5vw, 1.4em);
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: 300;
         }
 
         /* --- Секция с публикации (Blog Section) --- */
@@ -196,7 +235,7 @@
         /* --- Контейнер за блог публикации (Blog Posts Container) --- */
         #blog-posts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Адаптивни колони */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 50px;
             text-align: left; 
@@ -232,7 +271,7 @@
             line-height: 1.7;
             color: var(--text-dark);
             margin-bottom: 15px;
-            flex-grow: 1; /* Позволява на съдържанието да запълва наличното пространство */
+            flex-grow: 1;
         }
 
         .blog-post .meta-info {
@@ -260,11 +299,11 @@
             font-weight: 600;
             margin-top: 20px;
             transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            align-self: center; /* Центрира бутона във флекс контейнера */
+            align-self: center;
             white-space: nowrap;
-            max-width: 90%; /* Ограничава ширината на бутона на малки екрани */
-            text-overflow: ellipsis; /* Добавя '...' ако текста е твърде дълъг */
-            overflow: hidden; /* Скрива излишния текст */
+            max-width: 90%;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         .source-button:hover {
@@ -283,17 +322,27 @@
             margin-top: 40px;
             box-shadow: var(--shadow-heavy);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9em;
-            color: var(--text-dark);
+            width: 100%; /* Ensure footer spans full width of container, както е в trip.html */
         }
 
-        .footer-info {
-            margin-bottom: 20px;
-            line-height: 1.8;
+        .footer-links { /* Добавено от trip.html */
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
-        .footer-info p {
-            margin: 5px 0;
+        .footer-link { /* Добавено от trip.html */
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover { /* Добавено от trip.html */
+            color: var(--secondary-color);
+            transform: translateY(-3px);
         }
 
         /* --- Бутон за скрол догоре (Scroll to Top Button) --- */
@@ -309,10 +358,11 @@
             border: none;
             cursor: pointer;
             font-size: 1.5em;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect - от trip.html */
             opacity: 0;
             transform: translateY(100px);
             z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* от trip.html */
         }
 
         .scroll-to-top.visible {
@@ -322,22 +372,28 @@
 
         .scroll-to-top:hover {
             background: var(--secondary-color);
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-8px) scale(1.1); /* Stronger hover effect - от trip.html */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* от trip.html */
         }
 
         /* --- Анимации --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+        /* Добавено от trip.html */
+        .pulse {
+            animation: pulse 2s infinite ease-in-out;
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
-        /* --- Анимация на зареждане --- */
+        @keyframes fadeIn { /* Добавено от trip.html */
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Анимация на зареждане */
         .loading {
             display: inline-block;
             width: 20px;
@@ -354,53 +410,51 @@
 
         /* --- Медиа Заявки за Адаптивен Дизайн (Responsive Design Media Queries) --- */
 
-        /* За екрани до 1200px (напр. по-малки лаптопи) */
-        @media (max-width: 1200px) {
+        /* За екрани до 768px (от trip.html за по-добра съгласуваност) */
+        @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
+            
             .top-nav {
-                width: calc(100% - 30px); /* Adjust width for smaller padding */
-            }
-        }
-
-        /* За таблети и по-малки лаптопи (до 900px) */
-        @media (max-width: 900px) {
-            .weather-widget, .datetime-widget {
-                position: static; /* Стават част от нормалния поток */
-                margin: 10px auto; /* Центриране */
-                width: 90%; /* По-голяма ширина на малки екрани */
-                max-width: 350px; /* Максимална ширина за естетика */
-                padding: 12px;
-                font-size: 0.85em;
-            }
-
-            .top-nav {
-                flex-direction: column; /* Елементите се подреждат вертикално */
-                gap: 10px;
                 padding: 10px 15px;
-                margin-top: 20px; /* По-малко отстояние, тъй като уиджетите не са fixed */
+                gap: 10px;
+                margin-top: 20px;
+                flex-direction: row; /* Връщане към ред, както е в trip.html */
+                justify-content: center; /* Центриране на елементите */
             }
 
             .top-nav a {
-                width: 100%; /* Навигационните линкове заемат цялата ширина */
-                text-align: center;
-                padding: 10px;
+                padding: 8px 12px;
+                width: auto; /* Връщане към автоматична ширина */
             }
             
-            .blog-header {
-                padding: 30px 20px;
+            .weather-widget, .datetime-widget {
+                position: static;
+                margin: 10px auto;
+                width: 90%; /* Make them fill more width on mobile */
+                text-align: center;
+                display: block; /* Stack on top of each other */
+                max-width: none; /* Премахване на ограничението */
+            }
+            .weather-widget img {
+                margin-right: 5px; /* Add some space if on same line as text */
+            }
+            
+            header { /* Променено от .blog-header на header */
                 margin: 20px 0;
+                padding: 30px 20px;
             }
 
+            /* Стилове специфични за блога, остават си */
             .blog-section {
                 padding: 30px 20px;
                 margin: 20px auto;
-                max-width: 95%; /* По-голяма ширина за секцията */
+                max-width: 95%;
             }
 
             #blog-posts-container {
-                grid-template-columns: 1fr; /* Една колона за таблети и мобилни */
+                grid-template-columns: 1fr;
                 gap: 25px;
             }
 
@@ -415,15 +469,15 @@
                 padding: 10px;
             }
             
-            .blog-header {
+            header { /* Променено от .blog-header на header */
                 padding: 25px 15px;
             }
 
-            .blog-header h1 {
-                font-size: clamp(1.8em, 8vw, 3em); /* Допълнително намаляване за малки екрани */
+            h1 { /* Променено от .blog-header h1 на h1 */
+                font-size: clamp(1.8em, 8vw, 3em);
             }
 
-            .blog-header p {
+            .subtitle { /* Добавено за унификация */
                 font-size: clamp(0.9em, 3vw, 1.1em);
             }
 
@@ -497,10 +551,7 @@
     </nav>
 
 <div class="container">
-    <header class="blog-header fade-in">
-        <h1>Блог на Село Струпец</h1>
-        <p>Последни новини, интересни истории и събития от живота на селото.</p>
-    </header>
+    <header> <h1>📝 Блог на Село Струпец</h1> <p class="subtitle">Последни новини, интересни истории и събития от живота на селото.</p> </header>
 
     <section class="blog-section fade-in">
         <h2>Нашите публикации</h2>
@@ -510,16 +561,23 @@
             Все още няма публикации. Очаквайте скоро новини!
         </p>
     </section>
-
-    <footer class="fade-in">
-        <div class="footer-info">
-            <p><strong>📍 Адрес:</strong> Кметство село Струпец, община Роман, област Враца</p>
-            <p><strong>📞 Телефон:</strong> 09123 / ...</p>
-            <p><strong>📧 Email:</strong> kmet.strupec@roman.bg</p>
+    <footer>
+        <h3>🌟 Посетете село Струпец: Вашето незабравимо българско приключение!</h3>
+        <p>Потопете се в магията на Струпец – място, където историята диша във всеки камък, природата шепне легенди, а традициите се празнуват с отворено сърце. Очакваме ви с топло българско гостоприемство за едно наистина незабравимо преживяване!</p>
+        
+        <div class="footer-links">
+            <a href="index.html" class="footer-link">🏛️ Начало</a>
+            <a href="gallery.html" class="footer-link">📸 Галерия</a>
+            <a href="trip.html" class="footer-link">🛣️ Как да стигнем</a>
+            <a href="games.html" class="footer-link">🎮 Игри</a>
+            <a href="blog.html" class="footer-link">📝 Блог</a>
         </div>
-        <p style="margin-top: 15px;">
+        
+        <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
             © 2025 Село Струпец - Официален информационен сайт<br>
-            Създаден с ❤️ за запазване на българските традиции
+            Създаден с ❤️ за запазване на българските традиции<br>
+Богомил Павлов
++359882481246
         </p>
     </footer>
 </div>
@@ -593,8 +651,8 @@
             particle.style.left = Math.random() * 100 + '%';
             particle.style.top = Math.random() * 100 + '%';
             particle.style.width = particle.style.height = (Math.random() * 10 + 5) + 'px';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's'; /* Синхронизирано с trip.html */
+            particle.style.animationDuration = (Math.random() * 15 + 5) + 's'; /* Синхронизирано с trip.html */
             particlesContainer.appendChild(particle);
         }
     }
@@ -628,45 +686,14 @@
         });
     }
 
-    function adjustForMobile() {
-        const weatherWidget = document.querySelector('.weather-widget');
-        const datetimeWidget = document.querySelector('.datetime-widget');
-
-        if (window.innerWidth <= 900) { /* Променена граница за превключване */
-            if (weatherWidget) {
-                weatherWidget.style.position = 'static';
-                weatherWidget.style.margin = '10px auto';
-                weatherWidget.style.width = 'fit-content';
-            }
-            if (datetimeWidget) {
-                datetimeWidget.style.position = 'static';
-                datetimeWidget.style.margin = '10px auto';
-                datetimeWidget.style.width = 'fit-content';
-            }
-            // Адаптиране на margin-top на top-nav, когато уиджетите не са fixed
-            const topNav = document.querySelector('.top-nav');
-            if (topNav) {
-                topNav.style.marginTop = '20px'; 
-            }
+    // Премахване на adjustForMobile, тъй като стиловете вече са унифицирани и responsive.
+    // Вместо това, ще използваме събитието scroll за бутона, както е в trip.html
+    function handleScrollForButton() { /* Взето от trip.html */
+        const scrollButton = document.getElementById('scrollToTop');
+        if (window.pageYOffset > 500) {
+            scrollButton.classList.add('visible');
         } else {
-            if (weatherWidget) {
-                weatherWidget.style.position = 'fixed';
-                weatherWidget.style.margin = '0';
-                weatherWidget.style.top = '20px';
-                weatherWidget.style.right = '20px';
-                weatherWidget.style.width = 'auto';
-            }
-            if (datetimeWidget) {
-                datetimeWidget.style.position = 'fixed';
-                datetimeWidget.style.margin = '0';
-                datetimeWidget.style.top = '20px';
-                datetimeWidget.style.left = '20px';
-                datetimeWidget.style.width = 'auto';
-            }
-            const topNav = document.querySelector('.top-nav');
-            if (topNav) {
-                topNav.style.marginTop = '80px'; /* Връщане на оригиналното отстояние */
-            }
+            scrollButton.classList.remove('visible');
         }
     }
 
@@ -690,7 +717,7 @@
             title: "Врачанският Балкан - рай за любителите на природата",
             date: "03.04.2024",
             author: "Vratsa.bg",
-            content: "Около Струпец се простира величественият Врачански Балкан, част от Стара планина. Регионът е богат на пещери, водопади и екопътеки, които привличат туристи целогодишно. Запознайте се с най-популярните маршрути.",
+            content: "Около Струпец се простира величественият Врачански Балкан, част от Стара планина. Регионът е богат на пещери, водопаси и екопътеки, които привличат туристи целогодишно. Запознайте се с най-популярните маршрути.",
             sourceUrl: "https://www.vratsa.bg/index.php/tourism/nature/vrachanski-balkan"
         },
         {
@@ -769,8 +796,8 @@
         setInterval(updateWeather, 600000); 
         
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', adjustForMobile);
-        adjustForMobile(); // Initial adjustment on load and resize
+        window.addEventListener('scroll', handleScrollForButton); /* Добавено от trip.html */
+        handleScrollForButton(); // Call on load to check initial scroll position - от trip.html
 
         setTimeout(() => {
             const elements = document.querySelectorAll('.fade-in');
