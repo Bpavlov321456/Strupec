@@ -21,6 +21,10 @@
             --bg-glass: rgba(255, 255, 255, 0.1);
             --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
             --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --gradient-main: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffed4e);
+            --gradient-nature: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+            --gradient-cuisine: linear-gradient(135deg, #fceabb, #f8b500);
         }
 
         * {
@@ -33,10 +37,13 @@
             font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: var(--gradient-main);
             background-attachment: fixed;
             min-height: 100vh;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .floating-particles {
@@ -47,25 +54,27 @@
             height: 100%;
             pointer-events: none;
             z-index: -1;
+            overflow: hidden; /* Ensure particles don't escape */
         }
 
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15); /* Slightly more visible */
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+            animation: float 10s ease-in-out infinite alternate; /* Slower and alternate */
+            opacity: 0.8;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+            25% { transform: translate(50px, -30px) rotate(90deg); opacity: 0.9; }
+            50% { transform: translate(100px, 0) rotate(180deg); opacity: 0.8; }
+            75% { transform: translate(50px, 30px) rotate(270deg); opacity: 0.9; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.8; }
         }
 
-        /* Weather and Datetime widgets remain fixed */
-        .weather-widget {
+        .weather-widget, .datetime-widget {
             position: fixed;
-            top: 20px;
-            right: 20px;
             background: var(--bg-glass);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -75,28 +84,29 @@
             font-size: 0.9em;
             z-index: 1000;
             box-shadow: var(--shadow-light);
+            transition: all 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .weather-widget {
+            top: 20px;
+            right: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        .weather-widget:hover, .datetime-widget:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
         .weather-widget img {
             width: 30px;
             height: 30px;
         }
 
         .datetime-widget {
-            position: fixed;
             top: 20px;
             left: 20px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 15px;
-            color: white;
-            font-size: 0.9em;
-            z-index: 1000;
-            box-shadow: var(--shadow-light);
             min-width: 200px;
         }
 
@@ -104,9 +114,60 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            width: 100%;
         }
 
-        /* Top Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 100px 0 40px 0;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Slightly darker shadow */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out; /* Added fade in to header */
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite ease-in-out; /* Smoother shimmer */
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+            font-size: clamp(2.5em, 5vw, 4em);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15); /* Slightly stronger text shadow */
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1em, 2.5vw, 1.4em);
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
         .top-nav {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
@@ -114,12 +175,12 @@
             border-radius: 0 0 25px 25px;
             padding: 15px 30px;
             margin-bottom: 30px;
-            box-shadow: var(--shadow-light);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Adjusted shadow for elegance */
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            margin-top: 80px; /* Adjust for fixed widgets */
+            margin-top: 80px;
         }
 
         .top-nav a {
@@ -135,9 +196,9 @@
             background: var(--primary-color);
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* More prominent hover shadow */
         }
-
+        
         /* Main content styling for games page */
         .games-header {
             background: rgba(255, 255, 255, 0.95);
@@ -611,17 +672,27 @@
             margin-top: 40px;
             box-shadow: var(--shadow-heavy);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 0.9em;
-            color: var(--text-dark);
+            width: 100%; /* Ensure footer spans full width of container */
         }
 
-        .footer-info {
-            margin-bottom: 20px;
-            line-height: 1.8;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
-        .footer-info p {
-            margin: 5px 0;
+        .footer-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px); /* More pronounced lift */
         }
 
         .scroll-to-top {
@@ -636,10 +707,11 @@
             border: none;
             cursor: pointer;
             font-size: 1.5em;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
             opacity: 0;
             transform: translateY(100px);
             z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .scroll-to-top.visible {
@@ -649,10 +721,26 @@
 
         .scroll-to-top:hover {
             background: var(--secondary-color);
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-8px) scale(1.1); /* Stronger hover effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* Animations */
+        .pulse {
+            animation: pulse 2s infinite ease-in-out; /* Smoother pulse */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); } /* Less aggressive pulse */
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -695,14 +783,18 @@
                 padding: 8px 12px;
             }
             
-            /* Widgets can stack for better mobile viewing */
             .weather-widget, .datetime-widget {
                 position: static;
                 margin: 10px auto;
-                width: fit-content;
+                width: 90%; /* Make them fill more width on mobile */
+                text-align: center;
+                display: block; /* Stack on top of each other */
+            }
+            .weather-widget img {
+                margin-right: 5px; /* Add some space if on same line as text */
             }
             
-            .games-header {
+            header {
                 margin: 20px 0;
                 padding: 30px 20px;
             }
@@ -895,13 +987,19 @@
         </div>
     </section>
 
-    <footer class="fade-in">
-        <div class="footer-info">
-            <p><strong>📍 Адрес:</strong> Кметство село Струпец, община Роман, област Враца</p>
-            <p><strong>📞 Телефон:</strong> 09123 / ...</p>
-            <p><strong>📧 Email:</strong> kmet.strupec@roman.bg</p>
+    <footer>
+        <h3>🌟 Посетете село Струпец: Вашето незабравимо българско приключение!</h3>
+        <p>Потопете се в магията на Струпец – място, където историята диша във всеки камък, природата шепне легенди, а традициите се празнуват с отворено сърце. Очакваме ви с топло българско гостоприемство за едно наистина незабравимо преживяване!</p>
+        
+        <div class="footer-links">
+            <a href="index.html" class="footer-link">🏛️ Начало</a>
+            <a href="gallery.html" class="footer-link">📸 Галерия</a>
+            <a href="trip.html" class="footer-link">🛣️ Как да стигнем</a>
+            <a href="games.html" class="footer-link">🎮 Игри</a>
+            <a href="blog.html" class="footer-link">📝 Блог</a>
         </div>
-        <p style="margin-top: 15px;">
+        
+        <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
             © 2025 Село Струпец - Официален информационен сайт<br>
             Създаден с ❤️ за запазване на българските традиции
         </p>
@@ -983,8 +1081,8 @@
             particle.style.left = Math.random() * 100 + '%';
             particle.style.top = Math.random() * 100 + '%';
             particle.style.width = particle.style.height = (Math.random() * 10 + 5) + 'px';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's'; // Varied delay
+            particle.style.animationDuration = (Math.random() * 15 + 5) + 's'; // Varied duration
             particlesContainer.appendChild(particle);
         }
     }
@@ -1472,12 +1570,16 @@
             if (weatherWidget) {
                 weatherWidget.style.position = 'static';
                 weatherWidget.style.margin = '10px auto';
-                weatherWidget.style.width = 'fit-content';
+                weatherWidget.style.width = '90%'; /* Make them fill more width on mobile */
+                weatherWidget.style.textAlign = 'center';
+                weatherWidget.style.display = 'block'; /* Stack on top of each other */
             }
             if (datetimeWidget) {
                 datetimeWidget.style.position = 'static';
                 datetimeWidget.style.margin = '10px auto';
-                datetimeWidget.style.width = 'fit-content';
+                datetimeWidget.style.width = '90%'; /* Make them fill more width on mobile */
+                datetimeWidget.style.textAlign = 'center';
+                datetimeWidget.style.display = 'block'; /* Stack on top of each other */
             }
         } else {
             if (weatherWidget) {
@@ -1486,6 +1588,7 @@
                 weatherWidget.style.top = '20px';
                 weatherWidget.style.right = '20px';
                 weatherWidget.style.width = 'auto';
+                weatherWidget.style.display = 'flex'; /* Revert to flex for wider screens */
             }
             if (datetimeWidget) {
                 datetimeWidget.style.position = 'fixed';
@@ -1493,6 +1596,7 @@
                 datetimeWidget.style.top = '20px';
                 datetimeWidget.style.left = '20px';
                 datetimeWidget.style.width = 'auto';
+                datetimeWidget.style.display = 'block'; /* Revert to block for wider screens */
             }
         }
     }
